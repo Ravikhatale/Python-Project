@@ -1,15 +1,10 @@
 import json
 import math
 
-# -----------------------------
-# Utility function: Euclidean distance
-# -----------------------------
 def distance(p1, p2):
     return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
-# -----------------------------
-# Step 1: Read JSON file
-# -----------------------------
+
 with open("data.json", "r") as file:
     data = json.load(file)
 
@@ -17,9 +12,6 @@ warehouses = data["warehouses"]
 agents = data["agents"]
 packages = data["packages"]
 
-# -----------------------------
-# Initialize agent report structure
-# -----------------------------
 report = {}
 for agent in agents:
     report[agent] = {
@@ -27,9 +19,7 @@ for agent in agents:
         "total_distance": 0.0
     }
 
-# -----------------------------
-# Step 2 & 3: Assign packages and simulate delivery
-# -----------------------------
+
 for pkg in packages:
     warehouse_id = pkg["warehouse"]
     warehouse_loc = warehouses[warehouse_id]
@@ -54,9 +44,7 @@ for pkg in packages:
     report[nearest_agent]["packages_delivered"] += 1
     report[nearest_agent]["total_distance"] += total_trip_distance
 
-# -----------------------------
-# Step 4: Calculate efficiency & best agent
-# -----------------------------
+
 best_agent = None
 best_efficiency = float("inf")
 
@@ -74,9 +62,7 @@ for agent in report:
 
 report["best_agent"] = best_agent
 
-# -----------------------------
-# Step 5: Save report to JSON
-# -----------------------------
+
 with open("report.json", "w") as file:
     json.dump(report, file, indent=4)
 
